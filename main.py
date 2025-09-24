@@ -8,7 +8,7 @@
 # 8. Display a counter of the number of games played and the number of wins for the user.
 # 9. Repeat steps 2-8 until the user chooses to exit.
 
-def main(0):
+def main():
     import random
 
     choices = ['Rock', 'Paper', 'Scissors']
@@ -40,3 +40,7 @@ def main(0):
         games_played += 1
         print(f"Your choice: {user_choice}, Computer's choice: {computer_choice}")
         print(f"Games played: {games_played}, Your wins: {user_wins}")
+
+    print("Thanks for playing!")
+if __name__ == "__main__":
+    main()
