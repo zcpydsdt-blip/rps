@@ -17,10 +17,20 @@ def main():
     user_ties = 0
     games_played = 0
 
+    mode = ''
+    while mode not in ['classical', 'blitz']:
+        mode = input("Would you like to play 'classical' Rock Paper Scissors or 'blitz'? (classical/blitz): ").strip().lower()
+        if mode not in ['classical', 'blitz']:
+            print("Invalid mode. Please enter 'classical' or 'blitz'.")
+
+    print(f"You have selected {mode.title()} mode.")
+
     while True:
         play = input("Do you want to play Rock, Paper, Scissors? (yes/no): ").strip().lower()
         if play != 'yes':
             break
+
+        print(f"Mode: {mode.title()}")
 
         user_choice = input("Choose Rock, Paper, or Scissors: ").strip().capitalize()
         if user_choice not in choices:
