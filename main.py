@@ -50,6 +50,7 @@ def main():
         if play != 'yes':
             print("Thanks for playing!")
             return
+        blitz_exited = False
         while True:
             print(f"Mode: {mode.title()}")
             user_choice = timed_input("Choose R, P, or S (7 seconds): ", 7)
@@ -58,6 +59,7 @@ def main():
                 cont = input("Would you like to continue playing blitz mode? (yes/no): ").strip().lower()
                 if cont != 'yes':
                     print("Exiting blitz mode.")
+                    blitz_exited = True
                     break
                 # If user wants to continue, reset blitz_prompt_counter
                 blitz_prompt_counter = 0
@@ -91,9 +93,11 @@ def main():
                     cont = input("Would you like to continue playing blitz mode? (yes/no): ").strip().lower()
                     if cont != 'yes':
                         print("Exiting blitz mode.")
+                        blitz_exited = True
                         break
                     blitz_continue = True
-        print("Thanks for playing!")
+        if not blitz_exited:
+            print("Thanks for playing!")
     else:
         while True:
             play = input("Do you want to play Rock, Paper, Scissors? (yes/no): ").strip().lower()
