@@ -25,11 +25,8 @@ def main():
 
     print(f"You have selected {mode.title()} mode.")
 
-    import threading
-    import sys
-    blitz_continue = True
-    blitz_prompt_counter = 0
 
+    import threading
     def timed_input(prompt, timeout):
         result = [None]
         def inner():
@@ -46,6 +43,8 @@ def main():
         return result[0]
 
     if mode == 'blitz':
+        blitz_continue = True
+        blitz_prompt_counter = 0
         play = input("Do you want to play Rock, Paper, Scissors Blitz mode? (yes/no): ").strip().lower()
         if play != 'yes':
             print("Thanks for playing!")
@@ -56,52 +55,57 @@ def main():
             user_choice = timed_input("Choose R, P, or S (7 seconds): ", 7)
             if user_choice is None:
                 print("Time's up! You did not respond in time.")
-                cont = input("Would you like to continue playing blitz mode? (yes/no): ").strip().lower()
-                if cont != 'yes':
-                    print("Exiting blitz mode.")
-                    blitz_exited = True
+                play_again = input("Play Again? (yes/no): ").strip().lower()
+                if play_again == 'yes':
+                    # Prompt for mode again
+                    mode = ''
+                    while mode not in ['classical', 'blitz']:
+                        mode = input("Would you like to play 'classical' Rock Paper Scissors or 'blitz'? (classical/blitz): ").strip().lower()
+                        if mode not in ['classical', 'blitz']:
+                            print("Invalid mode. Please enter 'classical' or 'blitz'.")
+                    print(f"You have selected {mode.title()} mode.")
+                    # Restart main loop for new mode
+                    main()
+                    return
+                else:
+                    print("Thanks for playing!")
                     break
-                # If user wants to continue, reset blitz_prompt_counter
-                blitz_prompt_counter = 0
-                continue
-            user_choice = user_choice.strip().upper()
-            if user_choice not in ['R', 'P', 'S']:
-                print("Invalid choice. Please enter R, P, or S.")
-                continue
-            choice_map = {'R': 'Rock', 'P': 'Paper', 'S': 'Scissors'}
-            user_choice_full = choice_map[user_choice]
-            computer_choice = random.choice(choices)
-            print(f"Computer chose: {computer_choice}")
-            if user_choice_full == computer_choice:
-                print("It's a tie!")
-                user_ties += 1
-            elif (user_choice_full == 'Rock' and computer_choice == 'Scissors') or \
-                 (user_choice_full == 'Paper' and computer_choice == 'Rock') or \
-                 (user_choice_full == 'Scissors' and computer_choice == 'Paper'):
-                print("You win!")
-                user_wins += 1
             else:
-                print("You lose!")
-                user_losses += 1
-            games_played += 1
-            print(f"Your choice: {user_choice_full}, Computer's choice: {computer_choice}")
-            print(f"Games played: {games_played}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
-            # If user previously declined, only prompt every 5 rounds
-            if not blitz_continue:
-                blitz_prompt_counter += 1
-                if blitz_prompt_counter % 5 == 0:
-                    cont = input("Would you like to continue playing blitz mode? (yes/no): ").strip().lower()
-                    if cont != 'yes':
-                        print("Exiting blitz mode.")
-                        blitz_exited = True
-                        break
-                    blitz_continue = True
-        if not blitz_exited:
-            print("Thanks for playing!")
+                user_choice = user_choice.strip().upper()
+                if user_choice not in ['R', 'P', 'S']:
+                    print("Invalid choice. Please enter R, P, or S.")
+                    continue
+                choice_map = {'R': 'Rock', 'P': 'Paper', 'S': 'Scissors'}
+                user_choice_full = choice_map[user_choice]
+                computer_choice = random.choice(choices)
+                print(f"Computer chose: {computer_choice}")
+                if user_choice_full == computer_choice:
+                    print("It's a tie!")
+                    user_ties += 1
+                elif (user_choice_full == 'Rock' and computer_choice == 'Scissors') or \
+                     (user_choice_full == 'Paper' and computer_choice == 'Rock') or \
+                     (user_choice_full == 'Scissors' and computer_choice == 'Paper'):
+                    print("You win!")
+                    user_wins += 1
+                else:
+                    print("You lose!")
+                    user_losses += 1
+                games_played += 1
+                print(f"Your choice: {user_choice_full}, Computer's choice: {computer_choice}")
+                print(f"Games played: {games_played}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
+                if not blitz_continue:
+                    blitz_prompt_counter += 1
+                    if blitz_prompt_counter % 5 == 0:
+                        cont = input("Would you like to continue playing blitz mode? (yes/no): ").strip().lower()
+                        if cont != 'yes':
+                            print("Thanks for playing!")
+                            break
+                        blitz_continue = True
     else:
         while True:
             play = input("Do you want to play Rock, Paper, Scissors? (yes/no): ").strip().lower()
             if play != 'yes':
+                print("Thanks for playing!")
                 break
             print(f"Mode: {mode.title()}")
             user_choice_full = input("Choose Rock, Paper, or Scissors: ").strip().capitalize()
@@ -124,8 +128,6 @@ def main():
             games_played += 1
             print(f"Your choice: {user_choice_full}, Computer's choice: {computer_choice}")
             print(f"Games played: {games_played}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
-        print("Thanks for playing!")
 
-    print("Thanks for playing!")
 if __name__ == "__main__":
     main()
