@@ -42,8 +42,8 @@ def main():
             print("You lose!")
             user_losses += 1
         games_played += 1
-    print(f"Your choice: {user_choice}, Computer's choice: {computer_choice}")
-    print(f"Games played: {games_played}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
+        print(f"Your choice: {user_choice}, Computer's choice: {computer_choice}")
+        print(f"Games played: {games_played}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
 
     print("Thanks for playing!")
 if __name__ == "__main__":
