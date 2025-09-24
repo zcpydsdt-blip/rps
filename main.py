@@ -54,7 +54,7 @@ def main():
                 user_choice = timed_input("Choose R, P, or S (7 seconds): ", 7)
                 if user_choice is None:
                     print("Time's up! You did not respond in time.")
-                    play_again = input("Play Again? (yes/no): ").strip().lower()
+                    pclasslay_again = input("Play Again? (yes/no): ").strip().lower()
                     if play_again == 'yes':
                         break  # break to outer mode selection loop
                     else:
@@ -91,40 +91,41 @@ def main():
                             return
                         blitz_continue = True
         else:
-            classical_rounds = 0
             while True:
-                play = input("Do you want to play Rock, Paper, Scissors? (yes/no): ").strip().lower()
-                if play != 'yes':
+                classical_rounds = 0
+                while True:
+                    play = input("Do you want to play Rock, Paper, Scissors? (yes/no): ").strip().lower()
+                    if play != 'yes':
+                        print("Thanks for playing!")
+                        break
+                    print(f"Mode: {mode.title()}")
+                    user_choice_full = input("Choose Rock, Paper, or Scissors: ").strip().capitalize()
+                    if user_choice_full not in choices:
+                        print("Invalid choice. Please try again.")
+                        continue
+                    computer_choice = random.choice(choices)
+                    print(f"Computer chose: {computer_choice}")
+                    if user_choice_full == computer_choice:
+                        print("It's a tie!")
+                        user_ties += 1
+                    elif (user_choice_full == 'Rock' and computer_choice == 'Scissors') or \
+                         (user_choice_full == 'Paper' and computer_choice == 'Rock') or \
+                         (user_choice_full == 'Scissors' and computer_choice == 'Paper'):
+                        print("You win!")
+                        user_wins += 1
+                    else:
+                        print("You lose!")
+                        user_losses += 1
+                    games_played += 1
+                    classical_rounds += 1
+                    print(f"Your choice: {user_choice_full}, Computer's choice: {computer_choice}")
+                    print(f"Games played: {games_played}, Rounds played: {classical_rounds}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
+                play_again = input("Play Again? (yes/no): ").strip().lower()
+                if play_again == 'yes':
+                    continue  # restart classical session
+                else:
                     print("Thanks for playing!")
                     break
-                print(f"Mode: {mode.title()}")
-                user_choice_full = input("Choose Rock, Paper, or Scissors: ").strip().capitalize()
-                if user_choice_full not in choices:
-                    print("Invalid choice. Please try again.")
-                    continue
-                computer_choice = random.choice(choices)
-                print(f"Computer chose: {computer_choice}")
-                if user_choice_full == computer_choice:
-                    print("It's a tie!")
-                    user_ties += 1
-                elif (user_choice_full == 'Rock' and computer_choice == 'Scissors') or \
-                     (user_choice_full == 'Paper' and computer_choice == 'Rock') or \
-                     (user_choice_full == 'Scissors' and computer_choice == 'Paper'):
-                    print("You win!")
-                    user_wins += 1
-                else:
-                    print("You lose!")
-                    user_losses += 1
-                games_played += 1
-                classical_rounds += 1
-                print(f"Your choice: {user_choice_full}, Computer's choice: {computer_choice}")
-                print(f"Games played: {games_played}, Rounds played: {classical_rounds}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
-            play_again = input("Play Again? (yes/no): ").strip().lower()
-            if play_again == 'yes':
-                continue  # restart mode selection loop
-            else:
-                print("Thanks for playing!")
-                break
 
 if __name__ == "__main__":
     main()
