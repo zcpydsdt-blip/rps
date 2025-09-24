@@ -5,7 +5,7 @@
 # 5. Compare the user's choice with the computer's choice and determine the winner.
 # 6. Display the choices and the winner.
 # 7. Ask the user if they want to play again.
-# 8. Display a counter of the number of games played and the number of wins for the user.
+# 8. Display a counter of the number of games played and the number of wins, loses and ties for the user.
 # 9. Repeat steps 2-8 until the user chooses to exit.
 
 def main():
@@ -13,6 +13,8 @@ def main():
 
     choices = ['Rock', 'Paper', 'Scissors']
     user_wins = 0
+    user_losses = 0
+    user_ties = 0
     games_played = 0
 
     while True:
@@ -30,6 +32,7 @@ def main():
 
         if user_choice == computer_choice:
             print("It's a tie!")
+            user_ties += 1
         elif (user_choice == 'Rock' and computer_choice == 'Scissors') or \
              (user_choice == 'Paper' and computer_choice == 'Rock') or \
              (user_choice == 'Scissors' and computer_choice == 'Paper'):
@@ -37,9 +40,10 @@ def main():
             user_wins += 1
         else:
             print("You lose!")
+            user_losses += 1
         games_played += 1
-        print(f"Your choice: {user_choice}, Computer's choice: {computer_choice}")
-        print(f"Games played: {games_played}, Your wins: {user_wins}")
+    print(f"Your choice: {user_choice}, Computer's choice: {computer_choice}")
+    print(f"Games played: {games_played}, Wins: {user_wins}, Losses: {user_losses}, Ties: {user_ties}")
 
     print("Thanks for playing!")
 if __name__ == "__main__":
